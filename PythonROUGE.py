@@ -63,6 +63,10 @@ def PythonROUGE(guess_summ_file,ref_summ_list,ngram_order=1):
         if match != []:
             F_measure = float(match[0])
 
+    # remove temporary files which were created
+    os.remove(xml_path)
+    os.remove(ROUGE_output_path)
+
     return (recall,precision,F_measure)
     
     
