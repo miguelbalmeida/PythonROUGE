@@ -53,16 +53,17 @@ def PythonROUGE(guess_summ_file,ref_summ_list,ngram_order=1):
     # look for the recall, precision, and F-measure scores
     ROUGE_output_file = open(ROUGE_output_path,'r')
     for line in ROUGE_output_file:
-        match = re.findall('X ROUGE-1 Average_R: ([0-9.]+)',line)
+        match = re.findall('X ROUGE-' + str(ngram_order) + ' Average_R: ([0-9.]+)',line)
         if match != []:
             recall = float(match[0])
-        match = re.findall('X ROUGE-1 Average_P: ([0-9.]+)',line)
+        match = re.findall('X ROUGE-' + str(ngram_order) + ' Average_P: ([0-9.]+)',line)
         if match != []:
             precision = float(match[0])
-        match = re.findall('X ROUGE-1 Average_F: ([0-9.]+)',line)
+        match = re.findall('X ROUGE-' + str(ngram_order) + ' Average_F: ([0-9.]+)',line)
         if match != []:
             F_measure = float(match[0])
-
+    ROUGE_output_file.close()
+    
     # remove temporary files which were created
     os.remove(xml_path)
     os.remove(ROUGE_output_path)
@@ -109,7 +110,7 @@ if __name__ == '__main__':
     ref_summ_list = list()
     ref_summ_list.append('Example/Ref_Summ_1.txt')
     ref_summ_list.append('Example/Ref_Summ_2.txt')
-    recall,precision,F_measure = pythonROUGE(guess_summ_file,ref_summ_list)
+    recall,precision,F_measure = PythonROUGE(guess_summ_file,ref_summ_list)
     print 'recall = ' + str(recall)
     print 'precision = ' + str(precision)
     print 'F = ' + str(F_measure)
