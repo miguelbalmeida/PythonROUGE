@@ -9,6 +9,7 @@ INSTALLATION:
 2) Create a folder somewhere, say /home/you/PythonROUGE
 3) Place the "RELEASE-1.5.5" folder you got from ROUGE inside that folder, i.e. /home/you/PythonROUGE/RELEASE-1.5.5
 4) Place this package in parallel to the above, i.e. /home/you/PythonROUGE/PythonROUGE.py and /home/you/PythonROUGE/Example
+5) Edit the "PythonROUGE.py" file and replace the lines starting with "ROUGE_path =" and "data_path =" with the appropriate paths
 
 
 TESTING:
