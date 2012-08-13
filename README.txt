@@ -16,3 +16,5 @@ To use:
 recall = 0.3
 precision = 0.6
 F = 0.4
+
+7) To use from within Python, check the "if __name__ == '__main__':" part at the very end of the PythonROUGE.py file.
