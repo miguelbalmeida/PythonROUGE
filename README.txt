@@ -20,3 +20,5 @@ precision = 0.6
 F = 0.4
 
 
+USAGE:
+See the file "Example.py".
