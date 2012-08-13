@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Mon Aug 13 10:31:58 2012
 
@@ -31,12 +30,12 @@ def PythonROUGE(guess_summ_file,ref_summ_list,ngram_order=1):
         del temp
     
     # this is the path to your ROUGE distribution
-    ROUGE_path = '/home/miguel/ROUGE/RELEASE-1.5.5/ROUGE-1.5.5.pl'
-    data_path = '/home/miguel/ROUGE/RELEASE-1.5.5/data'
+    ROUGE_path = '/home/miguel/PythonROUGE/RELEASE-1.5.5/ROUGE-1.5.5.pl'
+    data_path = '/home/miguel/PythonROUGE/RELEASE-1.5.5/data'
     
     # these are the options used to call ROUGE
     # feel free to edit this is you want to call ROUGE with different options
-    options = '-a -m -n ' + ngram_order
+    options = '-a -m -n ' + str(ngram_order)
     
     # this is a temporary XML file which will contain information
     # in the format ROUGE uses
@@ -102,10 +101,10 @@ def create_xml(xml_path,guess_summ_file,ref_summ_list):
 # This is only called if this file is executed as a script.
 # It shows an example of usage.
 if __name__ == '__main__':
-    guess_summ_file = 'Examples/Guess_Summ_1.txt'
+    guess_summ_file = 'Example/Guess_Summ_1.txt'
     ref_summ_list = list()
-    ref_summ_list.append('Examples/Ref_Summ_1.txt')
-    ref_summ_list.append('Examples/Ref_Summ_2.txt')
+    ref_summ_list.append('Example/Ref_Summ_1.txt')
+    ref_summ_list.append('Example/Ref_Summ_2.txt')
     recall,precision,F_measure = pythonROUGE(guess_summ_file,ref_summ_list)
     print 'recall = ' + str(recall)
     print 'precision = ' + str(precision)
