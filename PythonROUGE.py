@@ -18,7 +18,7 @@ import re
 # Output: a tuple of the form (recall,precision,F_measure)
 #
 # Example usage: PythonROUGE('/home/foo/my_guess_summary.txt',[/home/bar/my_ref_summary_1.txt,/home/bar/my_ref_summary_2.txt])
-def PythonROUGE(guess_summ_file,ref_summ_list,ngram_order=1):
+def PythonROUGE(guess_summ_file,ref_summ_list,ngram_order=2):
     """ Wrapper function to use ROUGE from Python easily. """
     
     # even though we ask that the second argument is a list,
@@ -51,24 +51,29 @@ def PythonROUGE(guess_summ_file,ref_summ_list,ngram_order=1):
     
     # here, we read the file with the ROUGE output and
     # look for the recall, precision, and F-measure scores
+    recall_list = list()
+    precision_list = list()
+    F_measure_list = list()
     ROUGE_output_file = open(ROUGE_output_path,'r')
-    for line in ROUGE_output_file:
-        match = re.findall('X ROUGE-' + str(ngram_order) + ' Average_R: ([0-9.]+)',line)
-        if match != []:
-            recall = float(match[0])
-        match = re.findall('X ROUGE-' + str(ngram_order) + ' Average_P: ([0-9.]+)',line)
-        if match != []:
-            precision = float(match[0])
-        match = re.findall('X ROUGE-' + str(ngram_order) + ' Average_F: ([0-9.]+)',line)
-        if match != []:
-            F_measure = float(match[0])
+    for n in xrange(ngram_order):
+        ROUGE_output_file.seek(0)
+        for line in ROUGE_output_file:
+            match = re.findall('X ROUGE-' + str(n+1) + ' Average_R: ([0-9.]+)',line)
+            if match != []:
+                recall_list.append(float(match[0]))
+            match = re.findall('X ROUGE-' + str(n+1) + ' Average_P: ([0-9.]+)',line)
+            if match != []:
+                precision_list.append(float(match[0]))
+            match = re.findall('X ROUGE-' + str(n+1) + ' Average_F: ([0-9.]+)',line)
+            if match != []:
+                F_measure_list.append(float(match[0]))
     ROUGE_output_file.close()
     
     # remove temporary files which were created
     os.remove(xml_path)
-    os.remove(ROUGE_output_path)
+#    os.remove(ROUGE_output_path)
 
-    return (recall,precision,F_measure)
+    return (recall_list,precision_list,F_measure_list)
     
     
 # This is an auxiliary function
@@ -110,7 +115,7 @@ if __name__ == '__main__':
     ref_summ_list = list()
     ref_summ_list.append('Example/Ref_Summ_1.txt')
     ref_summ_list.append('Example/Ref_Summ_2.txt')
-    recall,precision,F_measure = PythonROUGE(guess_summ_file,ref_summ_list)
-    print 'recall = ' + str(recall)
-    print 'precision = ' + str(precision)
-    print 'F = ' + str(F_measure)
+    recall_list,precision_list,F_measure_list = PythonROUGE(guess_summ_file,ref_summ_list)
+    print 'recall = ' + str(recall_list)
+    print 'precision = ' + str(precision_list)
+    print 'F = ' + str(F_measure_list)
